@@ -1,0 +1,31 @@
+{
+  "name": "mgshork",
+  "version": "1.0.0",
+  "description": "Online network management software",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sgbtz/mgShork.git"
+  },
+  "keywords": [
+    "management",
+    "snmp",
+    "network"
+  ],
+  "author": "Sebastia Guisasola, Fabio López",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sgbtz/mgShork/issues"
+  },
+  "homepage": "https://github.com/sgbtz/mgShork#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "method-override": "^2.0.2",
+    "body-parser": "^1.4.3",
+    "net-snmp": "^1.2.2"
+  }
+}
