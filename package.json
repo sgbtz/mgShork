@@ -22,10 +22,11 @@
   },
   "homepage": "https://github.com/sgbtz/mgShork#readme",
   "dependencies": {
-    "express": "^4.16.3",
-    "morgan": "^1.9.0",
-    "method-override": "^2.0.2",
     "body-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "method-override": "^2.0.2",
+    "morgan": "^1.9.0",
     "net-snmp": "^1.2.2"
   }
 }
