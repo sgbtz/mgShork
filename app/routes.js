@@ -8,6 +8,10 @@ var router = require("express").Router();
 // grab the controllers
 /* to-finish */
 var auth = require("./controllers/auth/auth");
+var mibii = require("./controllers/snmp/mibii");
+var rmon = require("./controllers/snmp/rmon");
+var smon = require("./controllers/snmp/smon");
+var radius = require("./controllers/snmp/radius");
 
 
 module.exports = function(app, session){
@@ -19,7 +23,7 @@ module.exports = function(app, session){
 			auth.getToken(req, res, app);
 		});
 
-		router.use(function(req, res, next) {
+		router.use((req, res, next) => {
 			auth.checkToken(req, res, app, next);
 		});
 		// every route defined from here to app.use("/api", router)
