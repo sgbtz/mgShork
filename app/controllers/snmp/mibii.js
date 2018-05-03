@@ -40,7 +40,7 @@ module.exports = {
 		sysInfo = [];
 
 		// get info from agent
-		session.get (oids, (error, varbinds) => {
+		session.get(oids, (error, varbinds) => {
 			if (error) {
 					console.error(error);
 					res.json({
@@ -49,10 +49,10 @@ module.exports = {
 					});
 			} else {
 				for (var i = 0; i < varbinds.length; i++){
-					if (snmp.isVarbindError (varbinds[i]))
-						console.error(snmp.varbindError (varbinds[i]))
+					if (snmp.isVarbindError(varbinds[i]))
+						console.error(snmp.varbindError(varbinds[i]))
 					else
-						sysInfo[i] = varbinds[i].value.toString();
+						sysInfo.push(varbinds[i].value.toString());
 				}
 
 				res.json({ sysInfo: sysInfo });
@@ -62,19 +62,20 @@ module.exports = {
 	interfaces: (req, res, session) => {
 		// oid needed
 		oid = ifTable;
-		
+		interfaces = [];
+
 		// get info from agent
 		session.table(oid, (error, table) => {
 			if (error) {
-				console.error (error.toString ());
+				console.error(error.toString ());
 			} else {
 				// This code is purely used to print rows out in index order,
 				// ifIndex's are integers so we'll sort them numerically using
 				// the sortInt() function above
 				var indexes = [];
 				for (index in table)
-						indexes.push (parseInt (index));
-				indexes.sort (sortInt);
+						indexes.push(parseInt(index));
+				indexes.sort(sortInt);
 				
 				// Use the sorted indexes we've calculated to walk through each
 				// row in order
@@ -84,21 +85,32 @@ module.exports = {
 					// we calculate this per row
 					var columns = [];
 					for (column in table[indexes[i]])
-							columns.push (parseInt (column));
-					columns.sort (sortInt);
+						columns.push(parseInt(column));
+					columns.sort(sortInt);
 					
-					// Print index, then each column indented under the index
-					console.log ("row for index = " + indexes[i]);
-					for (var j = 0; j < columns.length; j++) {
-							console.log ("   column " + columns[j] + " = "
-											+ table[indexes[i]][columns[j]]);
-					}
+					// Save table as an object sorted by index
+					interfaces[indexes[i]] = table[indexes[i]];
+					for (var j = 0; j < columns.length; j++) 
+						interfaces[indexes[i]][columns[j]] = table[indexes[i]][columns[j]];
+
+					res.json(interfaces);
 				}
 			}
 		})
 
 	},
 	ip: (req, res, session) => {
+		// oid needed
+		oid = ipRouteTable;
+		ips = [];
 
+		// get info from agent
+		session.table(oid, (error, table) => {
+			if (error) {
+				console.error(error.toString ());
+			} else {
+				res.json(table);
+			}
+		})
 	}
 }

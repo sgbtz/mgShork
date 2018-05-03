@@ -16,7 +16,6 @@ module.exports = function(app, session){
 
 	// initialization
 	mibii.init(app);
-	mibii.interfaces(null, null, session);
 	//rmon.init(app);
 	//smon.init(app);
 
