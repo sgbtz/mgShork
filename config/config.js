@@ -3,7 +3,7 @@
 // configuration parameters are exported
 module.exports = {
 	// IP where we can found the snmp agent
-	ip: "127.0.0.0.0",
+	ip: "127.0.0.1",
 	// SNMP community name used as password
 	community: "public",
 	// Database configuration
