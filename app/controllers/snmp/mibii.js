@@ -1,4 +1,5 @@
 var snmp = require("net-snmp");
+var common = require("../common/common");
 var mib2, system, interfaces, ip;
 var sysDescr, sysUpTime, sysContact, sysName, sysLocation;
 var ifTable;
@@ -62,42 +63,12 @@ module.exports = {
 	interfaces: (req, res, session) => {
 		// oid needed
 		oid = ifTable;
-		interfaces = [];
+		interfaces = {};
 
-		// get info from agent
-		session.table(oid, (error, table) => {
-			if (error) {
-				console.error(error.toString ());
-			} else {
-				// This code is purely used to print rows out in index order,
-				// ifIndex's are integers so we'll sort them numerically using
-				// the sortInt() function above
-				var indexes = [];
-				for (index in table)
-						indexes.push(parseInt(index));
-				indexes.sort(sortInt);
-				
-				// Use the sorted indexes we've calculated to walk through each
-				// row in order
-				for (var i = 0; i < indexes.length; i++) {
-					// Like indexes we sort by column, so use the same trick here,
-					// some rows may not have the same columns as other rows, so
-					// we calculate this per row
-					var columns = [];
-					for (column in table[indexes[i]])
-						columns.push(parseInt(column));
-					columns.sort(sortInt);
-					
-					// Save table as an object sorted by index
-					interfaces[indexes[i]] = table[indexes[i]];
-					for (var j = 0; j < columns.length; j++) 
-						interfaces[indexes[i]][columns[j]] = table[indexes[i]][columns[j]];
-
-					res.json(interfaces);
-				}
-			}
-		})
-
+		// get sorted table
+		interfaces = common.sortTable(oid, session);
+		
+		res.json(interfaces);
 	},
 	ip: (req, res, session) => {
 		// oid needed

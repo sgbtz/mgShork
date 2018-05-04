@@ -12,7 +12,7 @@ module.exports={
 			return 0;
 	}
 
-	sortTable: (oid,res,req,session,app) => {
+	sortTable: (oid, session) => {
 		var varbinds = {};
 		
 		session.table(oid, (error,table) => {

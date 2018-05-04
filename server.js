@@ -25,6 +25,7 @@ app.set("token-secret", config.token.secret);
 var session = snmp.createSession (config.ip, config.community);
 // create global variables to access oids
 app.set("mib-2", "1.3.6.1.2.1");
+app.set("rmon", "1.3.6.1.2.1.16");
 
 // set our port
 var port = process.env.PORT || 8080;

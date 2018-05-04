@@ -6,7 +6,7 @@ var alarmTable, eventTable;
 module.exports={
 	init: (app) =>{
 		//configures oids needed
-		rmon = "1.3.6.1.2.1.16";
+		rmon = app.get("rmon");
 		alarm = rmon +".3";
 		even = rmon + ".9";
 		//alarmTable & eventTable oids
@@ -16,14 +16,14 @@ module.exports={
 	alarm: (res,req,session,app) =>{
 		oid = alarmTable;
 
-		//create alarm table
-		common.buildTable(oid,res,req,session,app);
+		//create alarm
 
 	},
 	event: (res,req,session,app) =>{
 		oid = eventTable;
-		//create event table
-		common.buildTable(oid,res,req,session,app);
+
+		//create event
+
 	}
 
 }
