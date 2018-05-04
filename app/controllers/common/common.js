@@ -1,5 +1,6 @@
 //common function defined here
-var snmp
+var snmp = require("net-snmp");
+
 module.exports={
 	// function to sort ints
 	function sortInt(a, b){
