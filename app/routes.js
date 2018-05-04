@@ -9,12 +9,15 @@ var router = require("express").Router();
 /* to-finish */
 var auth = require("./controllers/auth/auth");
 var mibii = require("./controllers/snmp/mibii");
-var rmon = require("./controllers/snmp/rmon");
-var smon = require("./controllers/snmp/smon");
-var radius = require("./controllers/snmp/radius");
-
+//var rmon = require("./controllers/snmp/rmon");
+//var smon = require("./controllers/snmp/smon");
 
 module.exports = function(app, session){
+
+	// initialization
+	mibii.init(app);
+	//rmon.init(app);
+	//smon.init(app);
 
 	// server routes =============================
 		
