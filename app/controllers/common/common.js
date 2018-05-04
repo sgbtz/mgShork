@@ -3,7 +3,7 @@ var snmp = require("net-snmp");
 
 module.exports={
 	// function to sort ints
-	function sortInt(a, b){
+	function sortInt(a, b) {
 		if (a > b)
 			return 1;
 		else if (b > a)
@@ -11,12 +11,14 @@ module.exports={
 		else
 			return 0;
 	}
-	buildTable:(oid,res,req,session,app)=>{
-		var varbind=[];
+
+	sortTable: (oid,res,req,session,app) => {
+		var varbinds = {};
 		
-		session.table(oid,(error,table)) =>{
+		session.table(oid, (error,table) => {
 			if(error){
 				console.error(error.toString());
+				return error;
 			}else{
 				var indexes = [];
 				for (index in table)
@@ -32,16 +34,13 @@ module.exports={
 					columns.sort(sortInt);
 
 				//Save table as an object sorted by index
-				varbind[indexes[i]]=table[indexes[i]];
+				varbinds[indexes[i]]=table[indexes[i]];
 				for(var j=0;j<columns.length;j++)
-					varbind[indexes[i]][columns[j]]= table[indexes[i]][columns[j]];
+					varbinds[indexes[i]][columns[j]]= table[indexes[i]][columns[j]];
 
-				res.json(varbind);
+					return varbinds;
 				}
 			}
-
-		}
-
-
+		});
 	}
 }
