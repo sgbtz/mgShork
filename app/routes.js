@@ -45,7 +45,7 @@ module.exports = function(app, session){
 
 	// route to handle all angular requests
 	app.get("/", function(req, res, err){
-		res.sendFile("./public/index.html"); // load our public/index.html file
+	res.sendFile("./public/index.html"); // load our public/index.html file
 	});
 
 	app.use(function(req, res){

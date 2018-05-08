@@ -1,4 +1,4 @@
-var snmp = require("net-snmp");
+avr snmp = require("net-snmp");
 var common = require("../common/common");
 var mib2, system, interfaces, ip;
 var sysDescr, sysUpTime, sysContact, sysName, sysLocation;
