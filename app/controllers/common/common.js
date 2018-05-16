@@ -1,17 +1,16 @@
 //common function defined here
 var snmp = require("net-snmp");
+// function to sort ints
+function sortInt(a, b) {
+	if (a > b)
+		return 1;
+	else if (b > a)
+		return -1;
+	else
+		return 0;
+}
 
 module.exports={
-	// function to sort ints
-	function sortInt(a, b) {
-		if (a > b)
-			return 1;
-		else if (b > a)
-			return -1;
-		else
-			return 0;
-	}
-
 	sortTable: (oid, session) => {
 		var varbinds = {};
 		

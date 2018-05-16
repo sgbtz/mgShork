@@ -1,19 +1,10 @@
-avr snmp = require("net-snmp");
+var snmp = require("net-snmp");
 var common = require("../common/common");
 var mib2, system, interfaces, ip;
 var sysDescr, sysUpTime, sysContact, sysName, sysLocation;
 var ifTable;
 var ipRouteTable;
 
-// function to sort ints
-function sortInt (a, b) {
-	if (a > b)
-		return 1;
-	else if (b > a)
-		return -1;
-	else
-		return 0;
-}
 
 module.exports = {
 	init: (app) => {

@@ -1,7 +1,7 @@
 // app/routes.js
 
 var router = require("express").Router();
-
+var snmp = require("net-snmp");
 // grab the models
 /* to-do */
 
@@ -9,26 +9,42 @@ var router = require("express").Router();
 /* to-finish */
 var auth = require("./controllers/auth/auth");
 var mibii = require("./controllers/snmp/mibii");
-//var rmon = require("./controllers/snmp/rmon");
+var rmon = require("./controllers/snmp/rmon");
 //var smon = require("./controllers/snmp/smon");
+//var snmp2 = require('snmpjs');
+//var bunyan = require('bunyan');
+//var util = require('util');
+
+/*var options = { 
+    addr: 'localhost',
+    port: 161,
+    family: 'udp4'
+};*/
+//var log = new bunyan({ name: 'snmpd', level: 'trace'});
+
+//var trapd = snmp2.createTrapListener({log: log});
 
 module.exports = function(app, session){
 
 	// initialization
 	mibii.init(app);
-	//rmon.init(app);
+	rmon.init(app);
 	//smon.init(app);
 
 	// server routes =============================
 		
 		// authentication routes
-		router.post("/auth", (req, res) => {
-			auth.getToken(req, res, app);
-		});
+		
+		//router.post("/auth", (req, res) => {
+		//	auth.getToken(req, res, app);
+		//});
 
-		router.use((req, res, next) => {
-			auth.checkToken(req, res, app, next);
-		});
+		//router.use((req, res, next) => {
+		//	auth.checkToken(req, res, app, next);
+		//});
+
+
+
 		// every route defined from here to app.use("/api", router)
 		// will be checked to know if the user is authenticated
 
@@ -36,7 +52,20 @@ module.exports = function(app, session){
 		/* GET api listing. */
 
 		/**************** CRUD FUNCTIONS ******************/
-		
+		/*trapd.on('trap',function(msg) {
+    		console.log(util.inspect(snmp2.message.serializer(msg), false, null));
+		})
+		trapd.bind(options);*/
+
+		router.get("/alarm", (req, res) => {
+			rmon.getalarms(req,res,session);
+		})
+		router.get("/setevent",(req,res)=>{
+			rmon.events(req,res,session);
+		})
+		router.get("/setalarm", (req,res) =>{
+			rmon.alarms(req, res,session);
+		})
 		/**************************************************/
 
 	app.use("/api", router);
